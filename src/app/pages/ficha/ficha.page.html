@@ -1,0 +1,87 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar [style.--background]="colorTipo()" [style.--color]="'#fff'">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/explorar" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ ficha()?.nombre ?? 'Ficha' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [style.--color-tipo]="colorTipo()">
+  @switch (estado()) {
+    @case ('cargando') {
+      <div class="centro">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    }
+    @case ('error') {
+      <div class="centro">
+        <p>No se pudo cargar esta ficha.</p>
+        <ion-button (click)="cargar()">Reintentar</ion-button>
+      </div>
+    }
+    @default {
+      @if (ficha(); as f) {
+        <section class="portada">
+          <span class="numero">{{ numero(f.id) }}</span>
+          <img [src]="f.imagen" [alt]="f.nombre" width="220" height="220" />
+        </section>
+
+        <section class="cuerpo">
+          <h1>{{ f.nombre }}</h1>
+          @if (f.categoria) {
+            <p class="categoria">{{ f.categoria }}</p>
+          }
+
+          <div class="tipos">
+            @for (t of tipos(); track t.nombre) {
+              <span class="tipo" [style.background]="t.color">{{ t.nombre }}</span>
+            }
+          </div>
+
+          @if (f.descripcion) {
+            <p class="descripcion">{{ f.descripcion }}</p>
+          }
+
+          <div class="medidas">
+            <div>
+              <strong>{{ f.alturaM }} m</strong>
+              <span>Altura</span>
+            </div>
+            <div>
+              <strong>{{ f.pesoKg }} kg</strong>
+              <span>Peso</span>
+            </div>
+            <div>
+              <strong>{{ total() }}</strong>
+              <span>Total base</span>
+            </div>
+          </div>
+
+          <h2>Estadísticas base</h2>
+          <app-radar-stats [datos]="f.estadisticas"></app-radar-stats>
+
+          <h2>Habilidades</h2>
+          <ul class="habilidades">
+            @for (h of f.habilidades; track h) {
+              <li>{{ h }}</li>
+            }
+          </ul>
+
+          @if (f.grito) {
+            <ion-button
+              expand="block"
+              fill="outline"
+              class="grito"
+              [disabled]="sonando()"
+              (click)="reproducirGrito()"
+            >
+              <ion-icon slot="start" name="volume-high-outline"></ion-icon>
+              {{ sonando() ? 'Reproduciendo…' : 'Escuchar grito' }}
+            </ion-button>
+          }
+        </section>
+      }
+    }
+  }
+</ion-content>
