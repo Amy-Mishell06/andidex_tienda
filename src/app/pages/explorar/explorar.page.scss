@@ -1,0 +1,95 @@
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px;
+  padding: 4px 12px 12px;
+}
+
+.tarjeta {
+  --tono: 160;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 6px 10px;
+  border-radius: 18px 18px 18px 4px;
+  background: hsl(var(--tono) 55% 91%);
+  color: #1d2b28;
+  text-decoration: none;
+  overflow: hidden;
+
+  // Franja diagonal del mismo tono que la tarjeta.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 46%;
+    background: hsl(var(--tono) 50% 80%);
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 0 100%);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  img {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+  }
+
+  .numero {
+    position: absolute;
+    top: 6px;
+    left: 9px;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.65;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nombre {
+    position: relative;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+.hueco {
+  height: 138px;
+  padding: 0;
+  background: transparent;
+
+  &::before {
+    display: none;
+  }
+
+  ion-skeleton-text {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 18px 18px 18px 4px;
+  }
+}
+
+.conteo {
+  margin: 10px 16px 6px;
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.aviso {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.legal {
+  margin: 8px 16px 24px;
+  font-size: 11px;
+  line-height: 1.4;
+  opacity: 0.55;
+  text-align: center;
+}
