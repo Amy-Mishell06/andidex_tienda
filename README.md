@@ -141,8 +141,14 @@ cd android
 
 5. Verificar la firma:
 
+El APK se firma solo con el esquema v2 (minSdk 24), así que `keytool -printcert` no lo
+reconoce; se usa `apksigner`, que está en `build-tools` del SDK. El AAB sí se verifica con
+`keytool`.
+
 ```bash
-keytool -printcert -jarfile app/build/outputs/apk/release/app-release.apk
+apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk
+keytool -printcert -jarfile app/build/outputs/bundle/release/app-release.aab
+certutil -hashfile app\build\outputs\apk\release\app-release.apk SHA256
 ```
 
 ### Instalar en el teléfono
