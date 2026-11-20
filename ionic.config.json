@@ -1,0 +1,7 @@
+{
+  "name": "andidex-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
