@@ -1,6 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-test('visits the app root url', async ({ page }) => {
+test('abre el listado de Andidex', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#container')).toContainText('Ready to create an app?');
+  await expect(page.locator('ion-title').first()).toContainText('Andidex');
+});
+
+test('abre la pantalla Acerca de', async ({ page }) => {
+  await page.goto('/acerca');
+  await expect(page.locator('h1')).toContainText('Andidex');
 });
