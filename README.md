@@ -12,8 +12,16 @@ Deber de Desarrollo de Aplicaciones Móviles (EPN). Integrantes: [Nombre 1] y [N
 
 - **Listado por regiones.** Una pestaña por región (Kanto a Paldea); cada región se pide
   a la API en una sola llamada. Búsqueda por nombre o número dentro de la región.
+- **Deslizar para actualizar.** Arrastrando la lista hacia abajo se vuelve a pedir la
+  región a la API, sin usar la caché.
 - **Detalle.** Imagen oficial, nombre, categoría y descripción en español, tipos, altura,
   peso, habilidades, estadísticas base en un radar SVG propio y reproducción del grito.
+- **Navegación entre fichas.** Botones Anterior y Siguiente para recorrer las fichas sin
+  volver al listado.
+- **Acerca de.** Pantalla con la versión, el identificador, los integrantes, el enlace a
+  la política de privacidad y el aviso de app no oficial.
+- **Modo oscuro.** La app sigue el tema del teléfono, con una paleta propia para fondo
+  oscuro.
 - **Estados.** Esqueletos de carga, mensaje de error con reintento y caché en memoria.
 
 ## Estructura
@@ -21,17 +29,18 @@ Deber de Desarrollo de Aplicaciones Móviles (EPN). Integrantes: [Nombre 1] y [N
 ```
 src/app/
 ├── core/
+│   ├── app-info.ts         # nombre, versión e integrantes (pantalla Acerca de)
 │   ├── catalogos.ts        # regiones, tipos y etiquetas en español
 │   ├── dex.models.ts       # interfaces
 │   └── dex.service.ts      # llamadas HTTP a PokeAPI + caché
 ├── pages/
+│   ├── acerca/             # versión, privacidad y aviso legal
 │   ├── explorar/           # listado
 │   └── ficha/              # detalle
 ├── ui/
 │   └── radar-stats.component.ts
 ├── app.component.ts
 └── app.routes.ts
-assets/                     # fuentes del ícono y de la pantalla de inicio
 ```
 
 No hay `app.module.ts`: todo se registra en `src/main.ts` con `bootstrapApplication`.
