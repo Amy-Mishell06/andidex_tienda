@@ -1,10 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
+  IonFooter,
   IonHeader,
   IonIcon,
   IonSpinner,
@@ -12,9 +14,13 @@ import {
   IonToolbar,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { volumeHighOutline } from 'ionicons/icons';
+import {
+  chevronBackOutline,
+  chevronForwardOutline,
+  volumeHighOutline,
+} from 'ionicons/icons';
 
-import { TIPOS } from '../../core/catalogos';
+import { REGIONES, TIPOS } from '../../core/catalogos';
 import { Ficha } from '../../core/dex.models';
 import { DexService } from '../../core/dex.service';
 import { RadarStatsComponent } from '../../ui/radar-stats.component';
@@ -29,6 +35,7 @@ type Estado = 'cargando' | 'listo' | 'error';
     IonButton,
     IonButtons,
     IonContent,
+    IonFooter,
     IonHeader,
     IonIcon,
     IonSpinner,
@@ -41,7 +48,12 @@ type Estado = 'cargando' | 'listo' | 'error';
 })
 export class FichaPage {
   private readonly dex = inject(DexService);
-  private readonly id = Number(inject(ActivatedRoute).snapshot.paramMap.get('id'));
+  private readonly ruta = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
+  readonly id = signal(0);
+  readonly ultimo =
+    REGIONES[REGIONES.length - 1].desde + REGIONES[REGIONES.length - 1].cantidad;
 
   readonly estado = signal<Estado>('cargando');
   readonly ficha = signal<Ficha | null>(null);
@@ -54,7 +66,6 @@ export class FichaPage {
     )
   );
 
-  /** El primer tipo define el color de toda la pantalla. */
   readonly colorTipo = computed(() => this.tipos()[0]?.color ?? '#1f6f5c');
 
   readonly total = computed(() =>
@@ -62,23 +73,42 @@ export class FichaPage {
   );
 
   constructor() {
-    addIcons({ volumeHighOutline });
-    this.cargar();
+    addIcons({ chevronBackOutline, chevronForwardOutline, volumeHighOutline });
+    this.ruta.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
+      this.id.set(Number(params.get('id')));
+      this.cargar();
+    });
   }
 
   cargar(): void {
-    if (!Number.isInteger(this.id) || this.id < 1) {
+    const pedido = this.id();
+    if (!Number.isInteger(pedido) || pedido < 1) {
       this.estado.set('error');
       return;
     }
     this.estado.set('cargando');
-    this.dex.obtenerFicha(this.id).subscribe({
+    this.dex.obtenerFicha(pedido).subscribe({
       next: (f) => {
-        this.ficha.set(f);
-        this.estado.set('listo');
+        // Si el usuario ya pasó a otra ficha, esta respuesta se descarta.
+        if (pedido === this.id()) {
+          this.ficha.set(f);
+          this.estado.set('listo');
+        }
       },
-      error: () => this.estado.set('error'),
+      error: () => {
+        if (pedido === this.id()) {
+          this.estado.set('error');
+        }
+      },
     });
+  }
+
+  ir(paso: number): void {
+    const destino = this.id() + paso;
+    if (destino >= 1 && destino <= this.ultimo) {
+      // replaceUrl: el botón atrás vuelve al listado, no a la ficha anterior.
+      this.router.navigate(['/ficha', destino], { replaceUrl: true });
+    }
   }
 
   reproducirGrito(): void {
