@@ -93,3 +93,14 @@
   opacity: 0.55;
   text-align: center;
 }
+
+@media (prefers-color-scheme: dark) {
+  .tarjeta {
+    background: hsl(var(--tono) 28% 17%);
+    color: #e6f0ed;
+
+    &::before {
+      background: hsl(var(--tono) 32% 25%);
+    }
+  }
+}
