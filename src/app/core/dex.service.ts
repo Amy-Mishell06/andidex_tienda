@@ -66,6 +66,10 @@ export class DexService {
     return peticion;
   }
 
+  olvidarRegion(clave: string): void {
+    this.regiones.delete(clave);
+  }
+
   obtenerFicha(id: number): Observable<Ficha> {
     const guardada = this.fichas.get(id);
     if (guardada) {

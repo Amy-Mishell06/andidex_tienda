@@ -1,10 +1,13 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import {
   IonButton,
   IonContent,
   IonHeader,
   IonLabel,
+  IonRefresher,
+  IonRefresherContent,
   IonSearchbar,
   IonSegment,
   IonSegmentButton,
@@ -28,6 +31,8 @@ type Estado = 'cargando' | 'listo' | 'error';
     IonContent,
     IonHeader,
     IonLabel,
+    IonRefresher,
+    IonRefresherContent,
     IonSearchbar,
     IonSegment,
     IonSegmentButton,
@@ -78,23 +83,36 @@ export class ExplorarPage {
     this.filtro.set(String((evento as CustomEvent).detail?.value ?? ''));
   }
 
-  cargar(): void {
+  /** Deslizar hacia abajo: vuelve a pedir la región ignorando la caché. */
+  refrescar(evento: Event): void {
+    const refresher = evento.target as unknown as { complete: () => void };
+    this.dex.olvidarRegion(this.region().clave);
+    this.cargar(() => refresher.complete());
+  }
+
+  /** alTerminar solo se usa al refrescar: así la lista no se borra mientras carga. */
+  cargar(alTerminar?: () => void): void {
     const pedida = this.region();
-    this.estado.set('cargando');
-    this.dex.listarRegion(pedida).subscribe({
-      next: (lista) => {
-        // Si el usuario cambió de región mientras llegaba la respuesta, se descarta.
-        if (pedida.clave === this.region().clave) {
-          this.entradas.set(lista);
-          this.estado.set('listo');
-        }
-      },
-      error: () => {
-        if (pedida.clave === this.region().clave) {
-          this.estado.set('error');
-        }
-      },
-    });
+    if (!alTerminar) {
+      this.estado.set('cargando');
+    }
+    this.dex
+      .listarRegion(pedida)
+      .pipe(finalize(() => alTerminar?.()))
+      .subscribe({
+        next: (lista) => {
+          // Si el usuario cambió de región mientras llegaba la respuesta, se descarta.
+          if (pedida.clave === this.region().clave) {
+            this.entradas.set(lista);
+            this.estado.set('listo');
+          }
+        },
+        error: () => {
+          if (pedida.clave === this.region().clave) {
+            this.estado.set('error');
+          }
+        },
+      });
   }
 
   numero(id: number): string {
