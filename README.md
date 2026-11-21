@@ -172,11 +172,11 @@ adb install app/build/outputs/apk/release/app-release.apk
 
 | Listado | Búsqueda | Otra región |
 | :---: | :---: | :---: |
-| <img width="220" alt="Listado" src="https://github.com/user-attachments/assets/e25a9e1e-2f3d-4ba8-a573-995c4c4a772b" /> | <img width="220" alt="Búsqueda" src="https://github.com/user-attachments/assets/70f558a1-57ea-400b-867a-34a946798b91" /> | <img width="220" alt="Johto" src="docs/capturas/app-03-region-johto.png" /> |
+| <img height="440" alt="Listado" src="https://github.com/user-attachments/assets/e25a9e1e-2f3d-4ba8-a573-995c4c4a772b" /> | <img height="440" alt="Búsqueda" src="https://github.com/user-attachments/assets/70f558a1-57ea-400b-867a-34a946798b91" /> | <img height="440" alt="Johto" src="docs/capturas/app-03-region-johto.png" /> |
 
 | Detalle | Estadísticas y grito | Ícono |
 | :---: | :---: | :---: |
-| <img width="220" alt="Detalle" src="https://github.com/user-attachments/assets/e78d61e8-f2cc-41f4-9a45-63e151f65250" /> | <img width="220" alt="Estadísticas" src="https://github.com/user-attachments/assets/8bfcadf1-d48c-4dc0-bb17-cf4f5f975b94" /> | <img width="120" alt="Ícono" src="docs/capturas/icono.png" /> |
+| <img height="440" alt="Detalle" src="https://github.com/user-attachments/assets/e78d61e8-f2cc-41f4-9a45-63e151f65250" /> | <img height="440" alt="Estadísticas" src="https://github.com/user-attachments/assets/8bfcadf1-d48c-4dc0-bb17-cf4f5f975b94" /> | <img height="120" alt="Ícono" src="docs/capturas/icono.png" /> |
 
 ### Compilación y firma
 
