@@ -12,5 +12,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/ficha/ficha.page').then((m) => m.FichaPage),
   },
+  {
+    path: 'acerca',
+    loadComponent: () =>
+      import('./pages/acerca/acerca.page').then((m) => m.AcercaPage),
+  },
   { path: '**', redirectTo: 'explorar' },
 ];

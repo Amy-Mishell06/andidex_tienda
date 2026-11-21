@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/explorar" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Acerca de</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="portada">
+    <!-- Mismo motivo del ícono: hexágono de estadísticas -->
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <polygon class="marco" points="50,8 86,29 86,71 50,92 14,71 14,29" />
+      <polygon class="dato" points="50,20 77,40 82,69 50,72 22,62 26,36" />
+    </svg>
+    <h1>{{ info.nombre }}</h1>
+    <p>Versión {{ info.version }}</p>
+  </section>
+
+  <ion-list [inset]="true">
+    <ion-list-header>Aplicación</ion-list-header>
+    <ion-item>
+      <ion-label>Identificador</ion-label>
+      <ion-note slot="end">{{ info.paquete }}</ion-note>
+    </ion-item>
+    <ion-item [href]="info.repositorio" target="_blank" [detail]="true">
+      <ion-label>Código fuente</ion-label>
+    </ion-item>
+    <ion-item [href]="privacidad" target="_blank" [detail]="true">
+      <ion-label>Política de privacidad</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [inset]="true">
+    <ion-list-header>Equipo</ion-list-header>
+    @for (persona of info.integrantes; track persona) {
+      <ion-item>
+        <ion-label>{{ persona }}</ion-label>
+      </ion-item>
+    }
+  </ion-list>
+
+  <ion-list [inset]="true">
+    <ion-list-header>Datos y aviso legal</ion-list-header>
+    <ion-item href="https://pokeapi.co" target="_blank" [detail]="true">
+      <ion-label class="ion-text-wrap">
+        Datos, imágenes y sonidos de PokeAPI, servicio gratuito y de código abierto.
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap legal">
+        App educativa, gratuita y no oficial. Pokémon y los nombres de sus personajes son
+        marcas de Nintendo, Game Freak y The Pokémon Company. Andidex no está afiliada ni
+        respaldada por ellas.
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

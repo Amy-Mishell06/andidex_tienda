@@ -3,8 +3,10 @@ import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import {
   IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonLabel,
   IonRefresher,
   IonRefresherContent,
@@ -15,6 +17,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { informationCircleOutline } from 'ionicons/icons';
 
 import { REGIONES } from '../../core/catalogos';
 import { EntradaLista, Region } from '../../core/dex.models';
@@ -28,8 +32,10 @@ type Estado = 'cargando' | 'listo' | 'error';
   imports: [
     RouterLink,
     IonButton,
+    IonButtons,
     IonContent,
     IonHeader,
+    IonIcon,
     IonLabel,
     IonRefresher,
     IonRefresherContent,
@@ -66,6 +72,7 @@ export class ExplorarPage {
   });
 
   constructor() {
+    addIcons({ informationCircleOutline });
     this.cargar();
   }
 
