@@ -198,8 +198,58 @@ Identificador, versión y permisos:
 
 ## Publicación
 
-Canal elegido: **Uptodown** (tienda alternativa). Enlace público: [pendiente].
-El detalle del envío y su estado están en el informe PDF.
+| Campo | Detalle |
+| --- | --- |
+| Canal | [Uptodown](https://www.uptodown.com/consola-de-desarrolladores) (tienda alternativa con revisión editorial) |
+| Archivo enviado | `app-release.apk`, versión 1.0.0 (versionCode 1), firmado |
+| Fecha de envío | 20/11/2026 |
+| Estado | **Rechazada** el 20/11/2026 a las 07:08 |
+| Enlace público | No disponible por el rechazo |
+
+### Por qué Uptodown
+
+De las cinco tiendas investigadas, es la única que una cuenta individual puede usar sin
+pago, sin testers obligatorios y sin empresa registrada, y acepta el mismo APK firmado que
+se instala en el teléfono. Google Play exige una prueba cerrada de 14 días con 12 testers,
+Amazon Appstore ya no funciona en teléfonos Android y Samsung Galaxy Store pide vendedor
+corporativo con D-U-N-S.
+
+### Proceso
+
+1. Registro en Uptodown Developers Console y creación de la ficha (estado *Draft*).
+2. Información general: nombre Andidex, Android, categoría Utilities, edad 12+; el paquete
+   `ec.epn.moviles.andidex` se lee del APK.
+3. Carga del APK firmado, 3 capturas y la descripción.
+4. Envío a revisión (*Submit for review*): la app pasó a *Pending revision*.
+5. Resultado: **rechazada**.
+
+### Motivo del rechazo
+
+El equipo editorial consideró que hay un uso ilegítimo de marcas registradas en el nombre,
+el ícono o las funcionalidades de la app, y pidió modificarla para evitar un posible
+conflicto legal.
+
+El nombre y el ícono son propios, así que el problema está en las funcionalidades: la app
+muestra nombres e imágenes oficiales de Pokémon (obtenidos de PokeAPI) y la descripción
+mencionaba la marca, aunque fuera para aclarar que no es oficial.
+
+### Acciones correctivas
+
+1. Quitar de la descripción, palabras clave y capturas toda mención a Pokémon, Nintendo y
+   The Pokémon Company.
+2. Usar en la ficha capturas sin personajes reconocibles (Acerca de, carga, error).
+3. Reenviar la versión 1.1.0 (versionCode 2), que incluye las mejoras de navegación,
+   actualización, pantalla Acerca de y modo oscuro.
+4. Escribir a soporte de Uptodown explicando que la app es educativa, gratuita y sin anuncios.
+5. Si se mantiene el rechazo: publicar el APK en GitHub Releases, identificado como
+   **distribución directa**, no como aprobación de una tienda.
+
+Cambiar la fuente de datos por criaturas propias eliminaría el problema de marca, pero
+dejaría de cumplir el requisito del deber de consumir la API de Pokémon. El rechazo es
+por propiedad intelectual, no por una falla técnica: el APK está firmado, se instala y
+funciona.
+
+Informe completo con capturas del proceso: [Informe_Publicacion_Andidex_ADiaz_CPuente.pdf](docs/Informe_Publicacion_Andidex_ADiaz_CPuente.pdf)
 
 ## Privacidad
 
